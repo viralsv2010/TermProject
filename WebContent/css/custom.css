@@ -1,0 +1,79 @@
+
+.container
+{
+    height: 100%;
+
+}
+
+.second-container {
+  padding: 30px;
+  max-width: 500px;
+  width: 100% !important;
+  background-color: #F7F7F7;
+  margin: 0 auto;
+  border-radius: 2px;
+  box-shadow: 0px 2px 2px rgba(0, 0, 0, 0.3);
+  overflow: hidden;
+}
+
+
+.second-container input[type=text], input[type=password] {
+  height: 35px;
+  font-size: 16px;
+  width: 100%;
+  margin-bottom: 10px;
+  -webkit-appearance: none;
+  background: #fff;
+  border: 1px solid #d9d9d9;
+  border-top: 1px solid #c0c0c0;
+  padding: 0 8px;
+  box-sizing: border-box;
+  -moz-box-sizing: border-box;
+}
+
+.header {
+  padding-left:180px;
+  font-size: 2em;
+  color: white;
+  float:left;
+  background:#57A7E6;
+}
+
+
+
+.header-signin
+{
+	padding-top:10px;
+	padding-left:85px;
+	padding-right:20px;
+	float:left;
+	color: black;
+ 	background:#57A7E6;
+ 	height:34px;
+}
+
+.loginbox
+{
+	margin-top:50px;
+  background-color: #F7F7F7;
+  margin: 0 auto;
+  border-radius: 2px;
+  box-shadow: 0px 2px 2px rgba(0, 0, 0, 0.3);
+  overflow: hidden;
+  max-width:550px;
+}
+
+.loginbox input[type=text], input[type=password] {
+	max-width:300px;
+	
+}
+	
+#signin
+{
+	margin-right:20px;
+	padding-right:20px;
+	bgcolor:#50A7E6;
+	max-width:100px;
+	color:White;
+	float:left;
+}

@@ -1,0 +1,73 @@
+  <!DOCTYPE html>
+  <html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:a="http://xmlns.jcp.org/jsf/passthrough">
+  <head>
+    <title>Login Page</title>
+    
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"></link>
+    <link rel="stylesheet" href="../css/custom.css"></link>
+	<script src="js/login.js"></script>
+  </head>
+<body onload="loginform.reset();">
+<div class="outer">
+	<div id="header">
+    	<h:head> 
+    		<title>Login Page</title>
+    	</h:head>
+
+<div class="loginbox" style="margin-top:200px">
+    <h:form id="loginform" style="height:260px;width:550px">
+    	<h:messages id="temp" style = "color:red;margin:8px;" />
+		<div class="container" style="height:231px;width:550px">        
+		  <table class="table table-hover">
+		    <thead bgcolor="#50A7E6">
+		      <tr >
+		        <th></th>
+		        <th style="color:White;" >Sign In</th>
+		        <th></th>
+		      </tr>
+		    </thead>
+		    <tbody>
+		      <tr>
+		        <td></td>
+			<td>
+		      <div class="input-group" style="padding-left:50px;">
+		        <span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
+		        <h:inputText id="username" value="#{LoginBean.username}" type="text" class="form-control" required="true" requiredMessage="Username must not be empty" name="username" a:placeholder="username"></h:inputText>
+		      </div></td>
+		      <td><h:message for="username" style="color:red" /></td>
+		      </tr>
+		      <tr>
+		        <td></td>
+		        <td>      
+		        <div class="input-group" style="padding-left:50px;">
+		        <span class="input-group-addon"><i class="glyphicon glyphicon-lock"></i></span>
+		        <h:inputSecret id="password" value="#{LoginBean.password}" type="password" required="true" requiredMessage="Password must not be empty" class="form-control" name="password" a:placeholder="password"></h:inputSecret>
+		        <td><h:message for="username" style="color:red" /></td>
+		      </div>
+		      </td>
+		      </tr>
+		      <tr>
+				<th></th>
+				<td style="padding-left:180px;"><h:commandButton id="Submit" value="Submit"  requiredMessage="Invalid Login Credentials." action="#{LoginBean.checkLogin}" class="btn btn-success"></h:commandButton></td>
+				<h:message for="Submit" styleClass="error" style="color:red"></h:message><br></br>
+			  </tr>
+			  <tr>
+			  <td></td>
+			  		<td style="padding-left:90px;">Don't have an account! <a href="Registration.xhtml">Register Here</a></td>
+			  </tr>
+		    </tbody>
+		  </table>
+	</div>
+	
+    </h:form>
+    <br></br>
+
+  </div>
+  </div>
+</div>
+  </body>
+  </html>
+

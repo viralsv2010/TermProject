@@ -1,0 +1,27 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+          "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:a="http://xmlns.jcp.org/jsf/passthrough">
+<head>
+  <title><ui:insert name="title">Registered Successfully</ui:insert></title>
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"></link>
+</head>
+
+<body>
+
+<div class="loginbox" style="margin-top:200px">
+    <h:form id="loginform" style="height:231px;width:550px;margin-left:200px;">
+    <a href="Login.xhtml" style="float:right;padding-top:10px;padding-right:10px"> Click here to Log In </a>
+		<div class="container" style="height:231px;width:550px;box-shadow: 0px 2px 2px rgba(0, 0, 0, 0.3);text-align:center;padding-top:100px;"> 
+		
+			Hello , #{LoginBean.username}
+			
+			You're <b>Successfully</b> registered.
+</div></h:form></div>
+
+
+</body>
+
+</html>
