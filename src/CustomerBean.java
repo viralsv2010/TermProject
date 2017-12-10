@@ -66,7 +66,7 @@ public class CustomerBean {
         }
         return symbol;
     }
-    
+
     public void setPurchaseSymbol(String purchaseSymbol) {
         System.out.println("func setPurchaseSymbol()");  //check
     }
@@ -237,7 +237,19 @@ public class CustomerBean {
 //			e.printStackTrace();
 //		}
 //	}
-    
+//    
+    public void logout()
+    {
+    	String page2 = "core/Login.xhtml";
+		System.out.println("Inside Logout.");
+		ExternalContext ec = FacesContext.getCurrentInstance().getExternalContext();
+		try {
+			ec.redirect(ec.getRequestContextPath() + "/" + page2);
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+    }
 
     public void timeseries() throws MalformedURLException, IOException {
 //
@@ -250,7 +262,7 @@ public class CustomerBean {
         String url = "https://www.alphavantage.co/query?function=TIME_SERIES_INTRADAY&symbol=" + symbol + "&interval=" + interval + "&apikey=" + API_KEY;
 
         System.out.println("URL Formed :: " + url);
-        this.table1Markup += "URL::: <a href='" + url + "'>Data Link</a><br>";
+       // this.table1Markup += "URL::: <a href='" + url + "'>Data Link</a><br>";
         InputStream inputStream = new URL(url).openStream();
 
         // convert the json string back to object
@@ -259,11 +271,15 @@ public class CustomerBean {
         for (String key : mainJsonObj.keySet()) {
         	System.out.println("Key val :: " + key);
             if (key.equals("Meta Data")) {
+            	System.out.println("Inside the Meta data ......");
                 this.table1Markup = null; // reset table 1 markup before repopulating
                 JsonObject jsob = (JsonObject) mainJsonObj.get(key);
+                System.out.println("JsonObject details :: " + jsob);
+                
                 this.table1Markup += "<style>#detail >tbody > tr > td{ text-align:center;}</style><b>Stock Details</b>:<br>";
                 this.table1Markup += "<table>";
                 this.table1Markup += "<tr><td>Information</td><td>" + jsob.getString("1. Information") + "</td></tr>";
+                System.out.println("Information Table :: " + this.table1Markup + "  :: " + jsob.getString("1. Information") );
                 this.table1Markup += "<tr><td>Symbol</td><td>" + jsob.getString("2. Symbol") + "</td></tr>";
                 this.table1Markup += "<tr><td>Last Refreshed</td><td>" + jsob.getString("3. Last Refreshed") + "</td></tr>";
                 this.table1Markup += "<tr><td>Interval</td><td>" + jsob.getString("4. Interval") + "</td></tr>";
@@ -289,7 +305,7 @@ public class CustomerBean {
                             + "<td>" + subJsonObj.getString("5. volume") + "</td>";
                     if (i == 0) {
                         String path = FacesContext.getCurrentInstance().getExternalContext().getRequestContextPath();
-                        this.table2Markup += "<td><a class='btn btn-success' href='" + path + "/faces/purchase.xhtml?symbol=" + symbol + "&price=" + subJsonObj.getString("4. close") + "'>Buy Stock</a></td>";
+                        this.table2Markup += "<td><a class='btn btn-success' href='" + path + "purchase.xhtml?symbol=" + symbol + "&price=" + subJsonObj.getString("4. close") + "'>Buy Stock</a></td>";
                     }
                     this.table2Markup += "</tr>";
                     i++;

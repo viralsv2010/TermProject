@@ -24,7 +24,7 @@
                                 <p>Welcome #{LoginBean.username}</p>
                             </h:panelGroup>
                         </span>
-                        <span style="float:right;"><a href="Login.xhtml" style="float:right;padding-top:10px;padding-right:10px"> Logout </a></span>
+                        <span><h:commandButton value="Get Data" action="#{CustomerBean.logout}" styleClass="btn btn-success" /></span>
                     </div>
                 </div>
             </h:form>
@@ -45,16 +45,16 @@
                             <f:selectItems value="#{CustomerBean.availableIntervals}" />
                         </h:selectOneMenu>
                         <br />
-                        <h:commandButton value="Get Data" action="#{CustomerBean.callapi}" styleClass="btn btn-success" />
+                        <h:commandButton value="Get Data" action="#{CustomerBean.timeseries}" styleClass="btn btn-success" />
                     </h:form>
                 </div>
 
-                <h:panelGroup rendered="#{not empty stockApiBean.table1Markup}">
-                    <h:outputText value="#{stockApiBean.table1Markup}" escape="false" styleClass="preformatted" />
+                <h:panelGroup rendered="#{not empty CustomerBean.table1Markup}">
+                    <h:outputText value="#{CustomerBean.table1Markup}" escape="false" styleClass="preformatted" />
                 </h:panelGroup>
 
-                <h:panelGroup rendered="#{not empty stockApiBean.table2Markup}">
-                    <h:outputText value="#{stockApiBean.table2Markup}" escape="false" styleClass="preformatted" />
+                <h:panelGroup rendered="#{not empty CustomerBean.table2Markup}">
+                    <h:outputText value="#{CustomerBean.table2Markup}" escape="false" styleClass="preformatted" />
                 </h:panelGroup>
             </div>
         </div>
