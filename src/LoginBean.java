@@ -173,17 +173,30 @@ public class LoginBean {
 		System.out.println(" Username is :: " + username + " Password is :: "+ password);
 		String page1 = "customer/CustomerDashboard.xhtml";
 		String page2 = "manager/ManagerDashboard.xhtml";
+		String page3 = "admin/AdminDashboard.xhtml";
 		if(username.equals(username) && password.equals(pass))
 		{
 			String roleVal = LoginDao.getRoleValue(username);
 			System.out.println("Role Value in Controller :: " + roleVal);
 			if(roleVal.equals("Customer"))
 			{
+					System.out.println("Inside Customer Role.");
+					ExternalContext ec = FacesContext.getCurrentInstance().getExternalContext();
+				try {
+					ec.redirect(ec.getRequestContextPath() + "/" + page1);
+				} catch (IOException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			}
+			else if(roleVal.equals("admin"))
+			{
+				System.out.println("Inside Admin Role.");
 				System.out.println("Inside Customer Role.");
 				ExternalContext ec = FacesContext.getCurrentInstance().getExternalContext();
-			try {
-				ec.redirect(ec.getRequestContextPath() + "/" + page1);
-			} catch (IOException e) {
+				try {
+					ec.redirect(ec.getRequestContextPath() + "/" + page3);
+				} catch (IOException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
