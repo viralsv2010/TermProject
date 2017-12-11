@@ -1,3 +1,6 @@
+import Dao.LoginDao;
+
+
 import java.io.IOException;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -10,6 +13,11 @@ import javax.faces.bean.SessionScoped;
 import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
 import javax.faces.context.Flash;
+
+
+
+
+
 
 @ManagedBean(name = "LoginBean")
 @SessionScoped
@@ -28,7 +36,7 @@ public class LoginBean {
 		this.role = role;
 	}
 
-	com.mysql.jdbc.jdbc2.optional.MysqlDataSource ds = new com.mysql.jdbc.jdbc2.optional.MysqlDataSource();
+	
 	public String getfirstname() {
 		return firstname;
 	}
@@ -88,64 +96,32 @@ public class LoginBean {
 
 	public String addUser()
 	{
-		Connection con = null;
-		boolean rs=true;
+		
+		
 		try{
 			// Setup the DataSource object
 			
-		
+			boolean valid =LoginDao.insert(firstname,lastname,address,email,phonenumber,username,password,role);
+			if(valid)
+			{
+				FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_INFO, "Registered Successfully","Registered Successfully");        
+//				FacesContext.getCurrentInstance().addMessage(null, message);      
+//				FacesContext.getCurrentInstance().getExternalContext().getFlash().setKeepMessages(true);
+				FacesContext context = FacesContext.getCurrentInstance();
+				context.addMessage("loginform:temp", message);
+				
+				context.getExternalContext().getFlash().setKeepMessages(true);
+				return "Login.xhtml?faces-redirect=true";
+			}
 			
-			System.out.println("Datasource successful.");
-			ds.setServerName(System.getenv("ICSI518_SERVER"));
-			System.out.println("Datasource successful. A" + System.getenv("ICSI518_SERVER"));
-			ds.setPortNumber(Integer.valueOf(System.getenv("ICSI518_PORT")));
-			System.out.println("Datasource successful. B" + Integer.valueOf(System.getenv("ICSI518_PORT")));
-			ds.setDatabaseName(System.getenv("ICSI518_DB"));
-			System.out.println("Datasource successful. C" + System.getenv("ICSI518_DB"));
-			ds.setUser(System.getenv("ICSI518_USER"));
-			System.out.println("Datasource successful. D" + System.getenv("ICSI518_USER"));
-			ds.setPassword(System.getenv("ICSI518_PASSWORD"));
-			System.out.println("Datasource successful. E" + System.getenv("ICSI518_PASSWORD"));
-
-			// Get a connection object
-			con = ds.getConnection();
-			System.out.println("Connection Successful");
-			// Get a prepared SQL statement
-			String sql = "insert into user(firstname,lastname,address,email,phonenumber,username,password,role)	VALUES(?,?,?,?,?,?,?,?)";
-			PreparedStatement st = con.prepareStatement(sql);
-			System.out.println("PreparedStatement Successful");
-			st.setString(1,firstname);
-			st.setString(2,lastname);
-			st.setString(3,address);
-			st.setString(5,email);
-			st.setString(4,phonenumber);
-			st.setString(6,username);
-			st.setString(7,password);
-			st.setString(8,role);
-
-			// Execute the statement
-			 rs = st.execute();
-			 System.out.println("Resultset Value is :: " + rs);
 		}
 
 		catch(Exception e){
 			e.printStackTrace();
 		}
 
-		finally {
-			try {
-				con.close();
-			} catch (SQLException e) {
-			}
-		}
-		
-		FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_INFO, "Registered Successfully","Registered Successfully");        
-//		FacesContext.getCurrentInstance().addMessage(null, message);      
-//		FacesContext.getCurrentInstance().getExternalContext().getFlash().setKeepMessages(true);
-		FacesContext context = FacesContext.getCurrentInstance();
-		context.addMessage("loginform:temp", message);
-		
-		context.getExternalContext().getFlash().setKeepMessages(true);
+		return "Registration.xhtml?faces-redirect=true";
+
 
 //		if(role.equals("Customer"))
 //		{
@@ -173,65 +149,16 @@ public class LoginBean {
 //			//return "./../customer/CustomerDashboard.xhtml?faces-redirect=true";
 //			return null;
 //		}
-		return "Login.xhtml?faces-redirect=true";
+
 	}
 
 
 	public void checkUsernameandPassword(String u_name)
 	{
 		System.out.println("Inside checkUsernameandPassword");
-		if(u_name!= null && password!=null)
-		{
-			System.out.println("Datasource successful.");
-			ds.setServerName(System.getenv("ICSI518_SERVER"));
-			System.out.println("Datasource successful. A" + System.getenv("ICSI518_SERVER"));
-			ds.setPortNumber(Integer.valueOf(System.getenv("ICSI518_PORT")));
-			System.out.println("Datasource successful. B" + Integer.valueOf(System.getenv("ICSI518_PORT")));
-			ds.setDatabaseName(System.getenv("ICSI518_DB"));
-			System.out.println("Datasource successful. C" + System.getenv("ICSI518_DB"));
-			ds.setUser(System.getenv("ICSI518_USER"));
-			System.out.println("Datasource successful. D" + System.getenv("ICSI518_USER"));
-			ds.setPassword(System.getenv("ICSI518_PASSWORD"));
-			System.out.println("Datasource successful. E" + System.getenv("ICSI518_PASSWORD"));
-			
-			Connection con= null;
-			PreparedStatement st= null;
-			ResultSet rs= null;
+		
+		boolean valid = LoginDao.checkLogin(u_name, password);
 
-
-				try
-				{
-					con= ds.getConnection();
-					System.out.println("Connection Successful");
-					String sql= "select username,password from user where username= '"+ u_name +"'";
-					PreparedStatement st1 = con.prepareStatement(sql);
-					
-					System.out.println("Prepared Statement is :: " + st1);
-					// Execute the statement
-					ResultSet rs1 = st1.executeQuery();
-					System.out.println("Resultset is :: " + rs1);
-					// Iterate through results
-					if (rs1.next()) {
-						System.out.println("User Name in rs is :: " + rs1.getString("username"));
-						user_name = rs1.getString("username");
-						pass_word = rs1.getString("password");
-
-					}
-				}
-
-					catch(Exception e)
-					{
-						 System.out.println("Exception for Not matched Username and Password." + e);
-						 e.printStackTrace();
-					}
-
-					finally {
-						try {
-							con.close();
-						} catch (SQLException e) {
-					}
-				}
-			}
 		
 		}
 
@@ -244,9 +171,11 @@ public class LoginBean {
 		System.out.println("User_name is :: " + user_name + " Username is :: " + username + " Pass_word is :: " + pass_word + " Password is :: "+ password);
 		String page1 = "customer/CustomerDashboard.xhtml";
 		String page2 = "manager/ManagerDashboard.xhtml";
-		if(user_name.equals(username) && pass_word.equals(password))
+		if(username.equals(username) && password.equals(password))
 		{
-			if(role.equals("Customer"))
+			String roleVal = LoginDao.getRoleValue(username);
+			System.out.println("Role Value in Controller :: " + roleVal);
+			if(roleVal.equals("Customer"))
 			{
 				System.out.println("Inside Customer Role.");
 				ExternalContext ec = FacesContext.getCurrentInstance().getExternalContext();
