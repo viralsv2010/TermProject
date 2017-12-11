@@ -15,12 +15,6 @@
 <h:form>
 <h:dataTable value="#{AdminBean.getUserList()}" var="u" border="1">
 
-<h:column>
-<f:facet name="header">
-User Name
-</f:facet>
-#{u.firstname}
-</h:column>
 
 <h:column>
 <f:facet name="header">
@@ -29,19 +23,11 @@ User ID
 #{u.userID}
 </h:column>
 
-
 <h:column>
 <f:facet name="header">
-Name
+Role
 </f:facet>
-#{u.lastname}
-</h:column>
-
-<h:column>
-<f:facet name="header">
-Address
-</f:facet>
-#{u.address}
+#{u.role}
 </h:column>
 
 <h:column>

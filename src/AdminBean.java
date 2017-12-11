@@ -44,62 +44,29 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 @ManagedBean(name = "AdminBean")
 @SessionScoped
 public class AdminBean {
-	private String firstname;
-	private String lastname;
-	private String address;
+	
 	private Boolean flagVal;
 	private int userID;
-
-public int getUserID() {
-		return userID;
-	}
-
-
-	public void setUserID(int userID) {
-		this.userID = userID;
-	}
-
-
-public String getFirstname() {
-		return firstname;
-	}
-
-
-	public void setFirstname(String firstname) {
-		this.firstname = firstname;
-	}
-
-
-	public String getLastname() {
-		return lastname;
-	}
-
-
-	public void setLastname(String lastname) {
-		this.lastname = lastname;
-	}
-
-
-	public String getAddress() {
-		return address;
-	}
-
-
-	public void setAddress(String address) {
-		this.address = address;
-	}
-
+	private String role;
 
 	public Boolean getFlagVal() {
 		return flagVal;
 	}
-
-
 	public void setFlagVal(Boolean flagVal) {
 		this.flagVal = flagVal;
 	}
-
-
+	public int getUserID() {
+		return userID;
+	}
+	public void setUserID(int userID) {
+		this.userID = userID;
+	}
+	public String getRole() {
+		return role;
+	}
+	public void setRole(String role) {
+		this.role = role;
+	}
 	public void changeApprove(String uname)
 	{
 		System.out.println("Username :: " + uname);
@@ -127,11 +94,11 @@ public String getFirstname() {
 			con = ds.getConnection();
 			if(flagVal == false)
 			{
-				sql = "update user set flagbyadmin=" + 1 + " where user_id= '" + uname +"'";
+				sql = "update manager set flagbyadmin=" + 1 + " where user_id= '" + uname +"'";
 			}
 			else
 			{
-				sql = "update user set flagbyadmin=" + 0 + " where user_id= '" + uname +"'";
+				sql = "update manager set flagbyadmin=" + 0 + " where user_id= '" + uname +"'";
 			}
 			System.out.println("Sql formed :: " + sql);
 			ps= con.prepareStatement(sql); 
@@ -180,15 +147,13 @@ public List<AdminBean> getUserList()
 			// Get a connection object
 			con = ds.getConnection();
 		
-		String sql = "select * from user";
+		String sql = "select * from manager";
 		ps= con.prepareStatement(sql); 
 		rs= ps.executeQuery(); 
 		while (rs.next())
 		{
 			AdminBean usr = new AdminBean();
-			usr.setFirstname(rs.getString("firstname"));
-			usr.setLastname(rs.getString("lastname"));
-			usr.setAddress(rs.getString("address"));
+			usr.setRole(rs.getString("role"));
 			usr.setFlagVal(rs.getBoolean("flagbyadmin"));
 			usr.setUserID(rs.getInt("user_id"));
 			

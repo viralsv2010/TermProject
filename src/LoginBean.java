@@ -102,6 +102,7 @@ public class LoginBean {
 			// Setup the DataSource object
 			
 			boolean valid =LoginDao.insert(firstname,lastname,address,email,phonenumber,username,password,role);
+			boolean validUser = LoginDao.inserIntoUser(username,password,role);
 			if(valid)
 			{
 				FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_INFO, "Registered Successfully","Registered Successfully");        
@@ -219,6 +220,13 @@ public class LoginBean {
 				}
 				else
 				{
+					FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_INFO, "Admin did not approved your request Yet.","Admin did not approved your request Yet.");        
+//					FacesContext.getCurrentInstance().addMessage(null, message);      
+//					FacesContext.getCurrentInstance().getExternalContext().getFlash().setKeepMessages(true);
+					FacesContext context = FacesContext.getCurrentInstance();
+					context.addMessage("loginform:temp", message);
+					
+					context.getExternalContext().getFlash().setKeepMessages(true);
 					System.out.println("Manager is not accepted so cannot able to Login.");
 					return "Login.xhtml?faces-redirect=true";
 				}
