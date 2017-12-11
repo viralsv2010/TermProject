@@ -1,41 +1,62 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
-          "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+<!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml"
-      xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
-<head>
-  <title><ui:insert name="title">Manager</ui:insert></title>
-</head>
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+    <h:head>
+        <title>TODO supply a title</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
 
-<body>
-<ui:debug hotkey="x" rendered="#{initParam['javax.faces.FACELETS_DEVELOPMENT']}"/>
+        <!-- Bootstrap core CSS -->
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/css/bootstrap.min.css"></link>
 
-<div id="header">
-    <ui:insert name="header">
-    	Header area.  See comments below this line in the source.
-    	<!--  include your header file or uncomment the include below and create header.xhtml in this directory -->
-    	<!-- <ui:include src="header.xhtml"/> -->
-    </ui:insert>
-</div>
+        <!-- Custom styles for this template -->
+        <link rel="stylesheet" href="../css/style.css" ></link>
 
+    </h:head>
+    <h:body>
+        <div class="container">
+            <h:form>
+                <div class="row">
+                    <div class="col-md-12 col-sm-12 col-lg-12" style="width:100%;text-align:right">
+                        <span style="float:left;">
+                            <h:panelGroup rendered="#{not empty userBean.username}">
+                                <p>Welcome #{LoginBean.username}</p>
+                            </h:panelGroup>
+                        </span>
+                        <span><h:commandButton value="Logout" action="#{CustomerBean.logout}" styleClass="btn btn-success" /></span>
+                    </div>
+                </div>
+            </h:form>
 
-<div id="content">
-  <ui:insert name="content">
-    	Content area.  See comments below this line in the source.
-    	<!--  include your content file or uncomment the include below and create content.xhtml in this directory -->
-	  	<!-- <div> -->
-    	<!-- <ui:include src="content.xhtml"/> -->  
-    	<!-- </div> -->
-  </ui:insert>
-</div>
+            <div class="well">
+                <legend>Search Data</legend>
 
-<div id="footer">
-  <ui:insert name="footer">
-    	Footer area.  See comments below this line in the source.
-    	<!--  include your header file or uncomment the include below and create footer.xhtml in this directory -->
-		<!--<ui:include src="footer.xhtml"/>  -->
-  </ui:insert>
-</div>
+                <div class="row">
 
-</body>
+                    <h:form>
+                        <label for="sel1">Stock: </label>
+                        <h:selectOneMenu id="symbol" value="#{CustomerBean.selectedSymbol}">
+                            <f:selectItems value="#{CustomerBean.availableSymbols}" />
+                        </h:selectOneMenu>
 
+                        <label for="sel1">Interval: </label>
+                        <h:selectOneMenu id="interval" value="#{CustomerBean.selectedInterval}">
+                            <f:selectItems value="#{CustomerBean.availableIntervals}" />
+                        </h:selectOneMenu>
+                        <br />
+                        <h:commandButton value="Get Data" action="#{CustomerBean.timeseries}" styleClass="btn btn-success" />
+                    </h:form>
+                </div>
+
+                <h:panelGroup rendered="#{not empty CustomerBean.table1Markup}">
+                    <h:outputText value="#{CustomerBean.table1Markup}" escape="false" styleClass="preformatted" />
+                </h:panelGroup>
+
+                <h:panelGroup rendered="#{not empty CustomerBean.table2Markup}">
+                    <h:outputText value="#{CustomerBean.table2Markup}" escape="false" styleClass="preformatted" />
+                </h:panelGroup>
+            </div>
+        </div>
+    </h:body>
 </html>

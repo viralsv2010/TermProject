@@ -27,7 +27,7 @@ public class LoginBean {
 	private String username;
 	private String password;
 	private String firstname;
-	private String lastname,address,email,phonenumber,pass_word,user_name,role;
+	private String lastname,address,email,phonenumber,role;
 	public String getRole() {
 		return role;
 	}
@@ -153,12 +153,13 @@ public class LoginBean {
 	}
 
 
-	public void checkUsernameandPassword(String u_name)
+	public String checkUsernameandPassword(String u_name,String pass_word)
 	{
 		System.out.println("Inside checkUsernameandPassword");
 		
-		boolean valid = LoginDao.checkLogin(u_name, password);
+		String pass = LoginDao.checkLogin(u_name, pass_word);
 
+		return pass;
 		
 		}
 
@@ -167,11 +168,12 @@ public class LoginBean {
 	public String checkLogin()
 	{
 		System.out.println("Inside CheckLogin. Username is ::" + username + "Password is ::" + password); 
-		checkUsernameandPassword(username);
-		System.out.println("User_name is :: " + user_name + " Username is :: " + username + " Pass_word is :: " + pass_word + " Password is :: "+ password);
+		String pass = checkUsernameandPassword(username,password);
+		System.out.println("Password from Database :: " + pass);
+		System.out.println(" Username is :: " + username + " Password is :: "+ password);
 		String page1 = "customer/CustomerDashboard.xhtml";
 		String page2 = "manager/ManagerDashboard.xhtml";
-		if(username.equals(username) && password.equals(password))
+		if(username.equals(username) && password.equals(pass))
 		{
 			String roleVal = LoginDao.getRoleValue(username);
 			System.out.println("Role Value in Controller :: " + roleVal);
@@ -189,12 +191,23 @@ public class LoginBean {
 			else
 			{
 				System.out.println("Inside Manager Role.");
-				ExternalContext ec = FacesContext.getCurrentInstance().getExternalContext();
-				try {
-					ec.redirect(ec.getRequestContextPath() + "/" + page2);
-				} catch (IOException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
+				boolean flagAcceptancebyAdmin = LoginDao.chekFlagofManager(username);
+				System.out.println("Flag of Manager by Admin in Controller :: " + flagAcceptancebyAdmin);
+				
+				if(flagAcceptancebyAdmin)
+				{
+					ExternalContext ec = FacesContext.getCurrentInstance().getExternalContext();
+					try {
+						ec.redirect(ec.getRequestContextPath() + "/" + page2);
+					} catch (IOException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+				}
+				else
+				{
+					System.out.println("Manager is not accepted so cannot able to Login.");
+					return "Login.xhtml?faces-redirect=true";
 				}
 			}
 			//return "./../customer/CustomerDashboard.xhtml?faces-redirect=true";
