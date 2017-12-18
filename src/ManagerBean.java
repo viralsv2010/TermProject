@@ -1264,6 +1264,82 @@ public class ManagerBean {
 	    }
 	    
 	    
+	    
+	    public List<ManagerBean> getSellHistory()
+	    {
+	    	
+	    	HttpServletRequest request = (HttpServletRequest) FacesContext.getCurrentInstance().getExternalContext().getRequest();
+	    	HttpSession session = request.getSession();
+	    	String user = request.getRemoteUser();
+	    	//Enumeration<String> names = session.getAttributeNames();
+	    	String name = (String)session.getAttribute("user");
+			System.out.println("Getting Data for user :: " + name);
+	  //  	System.out.println("Getting data of User :: " + name + " on Profile Page.");
+	  //  	System.out.println("Username in CustomerGetlsit :: " + username);
+	    		List<ManagerBean> list = new ArrayList<ManagerBean>();
+	    		PreparedStatement ps = null;
+	    		Connection con = null;
+	    		ResultSet rs = null;
+	    		try
+	    		{
+	    			com.mysql.jdbc.jdbc2.optional.MysqlDataSource ds = new com.mysql.jdbc.jdbc2.optional.MysqlDataSource();
+//	    			System.out.println("Datasource successful.");
+	    			ds.setServerName(System.getenv("ICSI518_SERVER"));
+//	    			System.out.println("Datasource successful. A" + System.getenv("ICSI518_SERVER"));
+	    			ds.setPortNumber(Integer.valueOf(System.getenv("ICSI518_PORT")));
+	    	//		System.out.println("Datasource successful. B" + Integer.valueOf(System.getenv("ICSI518_PORT")));
+	    			ds.setDatabaseName(System.getenv("ICSI518_DB"));
+//	    			System.out.println("Datasource successful. C" + System.getenv("ICSI518_DB"));
+	    			ds.setUser(System.getenv("ICSI518_USER"));
+	    	//		System.out.println("Datasource successful. D" + System.getenv("ICSI518_USER"));
+	    			ds.setPassword(System.getenv("ICSI518_PASSWORD"));
+//	    			System.out.println("Datasource successful. E" + System.getenv("ICSI518_PASSWORD"));
+	    		
+	    			// Get a connection object
+	    			con = ds.getConnection();
+	    		String sql = "select * from managersell where managername = '" + name +"'";
+	    		System.out.println("Query for manager History." + sql);
+	    		ps= con.prepareStatement(sql); 
+	    		rs= ps.executeQuery(); 
+	    		while (rs.next())
+	    		{
+	    			
+	            			ManagerBean cust = new ManagerBean();
+	            			cust.setSymbol(rs.getString("stock_symbol"));
+	            			cust.setCustomername(rs.getString("customername"));
+	            			cust.setAmt(rs.getDouble("amt"));
+	            			cust.setPrice(rs.getDouble("price"));
+	            			cust.setQty(rs.getInt("qty"));
+	            			cust.setDate(rs.getDate("date"));
+	            			cust.setTimestamp(rs.getString("timestamp"));
+	            			cust.setId(rs.getInt("uid"));
+	            			cust.setPurchasedByWhom(rs.getString("purchasedbywhom"));
+	            			list.add(cust);
+	            		
+
+	        		
+	        		}
+	    		} 
+	    		catch(Exception e)
+	    		{
+	    		e.printStackTrace();
+	    		}
+	    		finally
+	    		{
+	    		try
+	    		{
+	    		con.close();
+	    		ps.close();
+	    		}
+	    		catch(Exception e)
+	    		{
+	    		e.printStackTrace();
+	    		}
+	    		}
+	    		return list;
+	    }
+
+	    
 	    public void updateManagerProfile(String value, String field)
 	    {
 	    	
