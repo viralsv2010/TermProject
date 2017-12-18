@@ -1,0 +1,170 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+    <h:head>
+        <title>TODO supply a title</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+
+        <!-- Bootstrap core CSS -->
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/css/bootstrap.min.css"></link>
+
+        <!-- Custom styles for this template -->
+        <link rel="stylesheet" href="customer.css" ></link>
+
+    </h:head>
+<h:body>
+<hr class="">
+<h:form>
+<div class="container target">
+    <div class="row">
+        <div class="col-sm-10">
+             <h1 class=""><span> Welcome <h:outputText value="#{sessionScope.user}" /></span></h1>
+                        <span><h:commandButton value="Logout" action="#{CustomerBean.logout}" styleClass="btn btn-success" /></span>
+                        <span><h:commandButton value="Dashboard" action="#{CustomerBean.dashboardRedirect}" styleClass="btn btn-success" /></span>
+                        <span><h:commandButton value="Profile" action="#{CustomerBean.profileRedirect}" styleClass="btn btn-success" /></span>
+                        <span><h:commandButton value="Select Manager" action="#{CustomerBean.redirectManagerSelection}" styleClass="btn btn-success" /></span>
+                        <span><h:commandButton value="View Balance and History" action="#{CustomerBean.redirectBalanceandHistory}" styleClass="btn btn-success" /></span>
+                        <span> <h:commandButton value="Sell Stocks" action="#{CustomerBean.sellStocksRedirect}" styleClass="btn btn-success" /></span>
+                        <span> <h:commandButton value="Request Manager Buy" action="#{CustomerBean.requestManagerforstockpurchasebuy}" styleClass="btn btn-success" /></span>
+                        <span> <h:commandButton value="Request Manager Sell" action="#{CustomerBean.requestManagerforstockpurchasesell}" styleClass="btn btn-success" /></span>
+                        <span><h:commandButton value="Watch List" action="#{CustomerBean.redirectToWatchList}" styleClass="btn btn-success" /></span>
+<br></br>
+        </div>
+      <div class="col-sm-2"><a href="/users" class="pull-right"><img title="profile image" class="img-circle img-responsive" src="http://www.rlsandbox.com/img/profile.jpg"></img></a>
+
+        </div>
+    </div>
+
+
+<h:form>
+
+<h:outputLabel>Your Available Balance <h:outputText value="#{CustomerBean.getBalance()}" /></h:outputLabel> 
+
+<br></br>
+<h:outputLabel>Your Purchase History</h:outputLabel>
+<h:dataTable value="#{CustomerBean.getStocksList()}" var="u" border="1">
+
+		<h:column>
+    			
+    				<f:facet name="header">Stock ID</f:facet>
+    				
+    				
+    				<h:outputText value="#{u.stock_id}"  />
+					
+    	</h:column>
+    
+		<h:column>
+    			
+    				<f:facet name="header">Stock Name</f:facet>
+    				
+    				
+    				<h:outputText value="#{u.symbol}"  />
+					
+    	</h:column> -->
+
+		<h:column>
+    			
+    				<f:facet name="header">Quantity</f:facet>
+    				
+    				<h:outputText value="#{u.qty}"  />
+					
+    	</h:column>
+
+		<h:column>
+    			
+    				<f:facet name="header">Price at which Stock Purchased</f:facet>
+    				
+    				<h:outputText value="#{u.price}"  />
+					
+    	</h:column>
+
+		<h:column>
+    			
+    				<f:facet name="header">Amount while Purchasing stock</f:facet>
+    				
+    				<h:outputText value="#{u.amt}"  />
+					
+    	</h:column>
+ 
+ 
+		<h:column>
+    			
+    				<f:facet name="header">Date of Purchase</f:facet>
+    				
+    				<h:outputText value="#{u.date}"  />
+					
+    	</h:column>
+    	
+		<h:column>
+    			
+    				<f:facet name="header">Time of Purchase</f:facet>
+    				
+    				<h:outputText value="#{u.timestamp}"  />
+					
+    	</h:column>   	
+  	
+</h:dataTable>
+			
+			
+<h:outputLabel>Your Sell History</h:outputLabel>
+<h:dataTable value="#{CustomerBean.getSellHistory()}" var="u" border="1">
+    
+		<h:column>
+    			
+    				<f:facet name="header">Stock Name</f:facet>
+    				
+    				
+    				<h:outputText value="#{u.symbol}"  />
+					
+    	</h:column> -->
+
+		<h:column>
+    			
+    				<f:facet name="header">Quantity</f:facet>
+    				
+    				<h:outputText value="#{u.qty}"  />
+					
+    	</h:column>
+
+		<h:column>
+    			
+    				<f:facet name="header">Price at which Stock sold</f:facet>
+    				
+    				<h:outputText value="#{u.price}"  />
+					
+    	</h:column>
+
+		<h:column>
+    			
+    				<f:facet name="header">Amount while Selling stock</f:facet>
+    				
+    				<h:outputText value="#{u.amt}"  />
+					
+    	</h:column>
+ 
+ 
+		<h:column>
+    			
+    				<f:facet name="header">Date of Sell</f:facet>
+    				
+    				<h:outputText value="#{u.date}"  />
+					
+    	</h:column>
+    	
+		<h:column>
+    			
+    				<f:facet name="header">Time of Sell</f:facet>
+    				
+    				<h:outputText value="#{u.timestamp}"  />
+					
+    	</h:column>   	
+  	
+</h:dataTable>
+</h:form>
+</div>
+</h:form>
+</hr>
+    </h:body>
+</html>

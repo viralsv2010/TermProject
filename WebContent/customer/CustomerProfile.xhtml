@@ -1,0 +1,177 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+    <h:head>
+        <title>TODO supply a title</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+
+        <!-- Bootstrap core CSS -->
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/css/bootstrap.min.css"></link>
+
+        <!-- Custom styles for this template -->
+        <link rel="stylesheet" href="customer.css" ></link>
+
+    </h:head>
+<h:body>
+<hr class="">
+<h:form>
+<div class="container target">
+    <div class="row">
+        <div class="col-sm-10">
+             <h1 class=""><span> Welcome <h:outputText value="#{sessionScope.user}" /></span></h1>
+                        <span><h:commandButton value="Logout" action="#{CustomerBean.logout}" styleClass="btn btn-success" /></span>
+                        <span><h:commandButton value="Dashboard" action="#{CustomerBean.dashboardRedirect}" styleClass="btn btn-success" /></span>
+                        <span><h:commandButton value="Profile" action="#{CustomerBean.profileRedirect}" styleClass="btn btn-success" /></span>
+                        <span><h:commandButton value="Select Manager" action="#{CustomerBean.redirectManagerSelection}" styleClass="btn btn-success" /></span>
+                        <span><h:commandButton value="View Balance and History" action="#{CustomerBean.redirectBalanceandHistory}" styleClass="btn btn-success" /></span>
+                        <span> <h:commandButton value="Sell Stocks" action="#{CustomerBean.sellStocksRedirect}" styleClass="btn btn-success" /></span>
+                        <span> <h:commandButton value="Request Manager Buy" action="#{CustomerBean.requestManagerforstockpurchasebuy}" styleClass="btn btn-success" /></span>
+                        <span> <h:commandButton value="Request Manager Sell" action="#{CustomerBean.requestManagerforstockpurchasesell}" styleClass="btn btn-success" /></span>
+                        <span><h:commandButton value="Watch List" action="#{CustomerBean.redirectToWatchList}" styleClass="btn btn-success" /></span>
+<br></br>
+        </div>
+      <div class="col-sm-2"><a href="/users" class="pull-right"><img title="profile image" class="img-circle img-responsive" src="http://www.rlsandbox.com/img/profile.jpg"></img></a>
+
+        </div>
+    </div>
+
+
+<h:form>
+<h:dataTable value="#{CustomerBean.getUserList()}" var="u" border="1">
+<h:messages style="color: red;"/>
+
+		<h:column>
+    			
+    				<f:facet name="header">First Name</f:facet>
+    				
+    				
+    				<h:outputText value="#{u.firstname}"  />
+					
+    	</h:column>
+
+		<h:column>
+    			
+    				<f:facet name="header">Last Name</f:facet>
+    				
+    				<h:outputText value="#{u.lastname}"  />
+					
+    	</h:column>
+
+		<h:column>
+    			
+    				<f:facet name="header">Email</f:facet>
+    				
+    				<h:outputText value="#{u.email}"  />
+					
+    	</h:column>
+
+		<h:column>
+    			
+    				<f:facet name="header">Phone Number</f:facet>
+    				
+    				<h:outputText value="#{u.phonenumber}"  />
+					
+    	</h:column>
+    	<h:column>
+    			
+    				<f:facet name="header">Role</f:facet>
+    				
+    				<h:outputText value="#{u.role}"  />
+					
+    	</h:column>
+
+    	<h:column>
+    			
+    				<f:facet name="header">Address</f:facet>
+    				
+    				
+    				<h:outputText value="#{u.address}"  />
+					
+    	</h:column>
+    			
+
+
+<!--  
+<h:column>
+    <h:commandButton value="Approve" action="#{CustomerBean.changeApprove(u.userID)}">
+        <f:setPropertyActionListener target="#{CustomerBean.flagVal}" value="#{u.flagVal}"/>
+    </h:commandButton>
+</h:column>
+<h:column>
+    <h:commandButton value="Decline" action="#{CustomerBean.changeApprove(u.userID)}">
+        <f:setPropertyActionListener target="#{AdminBean.flagVal}" value="#{u.flagVal}"/>
+    </h:commandButton>
+</h:column>
+-->
+</h:dataTable>
+<h:messages style="color: red;"/>
+
+
+			<div class="container">
+			  <table class="table table-hover table-condensed">
+			  	
+			    <tbody>
+			      <tr>
+			        <th><label for="firstname">First Name ::</label></th>
+			        <th><h:inputText id="firstname" value="#{CustomerBean.firstname}"  requiredMessage="Firstname is required." class="form-control" placeholder="First Name" ></h:inputText></th>
+			      </tr>
+			       <tr>
+			      	<th></th>
+			        <td><h:commandButton id="UpdateFirstName" style="background:#50A7E6;color:white" value="Update First Name" action="#{CustomerBean.updatefirstname()}" class="btn btn-info loginmodal-submit"></h:commandButton></td>
+			      </tr>
+			    </tbody>
+			    <tbody>
+			      <tr>
+			        <th><label for="lastname">Last Name ::</label></th>
+			        <td><h:inputText id="lastname" value="#{CustomerBean.lastname}"   requiredMessage="LastName is required." class="form-control"  placeholder="Last Name" ></h:inputText></td>
+			      </tr>
+			       <tr>
+			      	<th></th>
+			        <td><h:commandButton id="UpdateLastName" style="background:#50A7E6;color:white" value="Update Last Name"  action="#{CustomerBean.updatelastname()}" class="btn btn-info loginmodal-submit"></h:commandButton></td>
+			        
+			      </tr>
+			      
+			      <tr>
+			        <th><label for="address">Address ::</label></th>
+			        <td><h:inputText id="address" value="#{CustomerBean.address}"  requiredMessage="Address is required." class="form-control"   placeholder="P.O. BOX 123" ></h:inputText></td>
+			      </tr>
+			       <tr>
+			      	<th></th>
+			        <td><h:commandButton id="UpdateAddress" style="background:#50A7E6;color:white" value="Update Address"  action="#{CustomerBean.updateaddress()}" class="btn btn-info loginmodal-submit"></h:commandButton></td>
+			        
+			      </tr>
+			      
+			      <tr>
+			        <th><label for="phonenumber">Phone Number ::</label></th>
+			        <td><h:inputText id="phonenumber" value="#{CustomerBean.phonenumber}"  maxlength="10" requiredMessage="PhoneNumber is required." class="form-control"  placeholder="9999999999" ><f:validateLength minimum="10" maximum="10" /></h:inputText></td>
+			      </tr>
+			      
+			       <tr>
+			      	<th></th>
+			        <td><h:commandButton id="UpdatePhoneNumber" style="background:#50A7E6;color:white" value="Update Phone Number"  action="#{CustomerBean.updatephonenumber()}" class="btn btn-info loginmodal-submit"></h:commandButton></td>
+			        
+			      </tr>
+			      <tr>
+			        <th><label for="personalemail">Personal Email ::</label></th>
+			        <td><h:inputText id="personalemail" value="#{CustomerBean.email}"  requiredMessage="Email Address is required." class="form-control"   placeholder="Email Address"  validatorMessage="Invalid Email Address"> <f:validateRegex pattern="[a-zA-Z0-9]+@[a-zA-Z]+.[a-zA-Z]{2,3}"></f:validateRegex></h:inputText></td>
+			      </tr>
+			      
+			      <tr>
+			      	<th></th>
+			        <td><h:commandButton id="UpdateEmail" style="background:#50A7E6;color:white" value="Update Email"  action="#{CustomerBean.updateemail()}" class="btn btn-info loginmodal-submit"></h:commandButton></td>
+			        
+			      </tr>
+			      
+
+			    </tbody>
+			  </table>
+			</div>
+			
+</h:form>
+</div>
+</h:form>
+</hr>
+    </h:body>
+</html>

@@ -13,11 +13,6 @@
 
 <div>Inside Admin Dashboard.</div>
 <h:form>
-
-                        <span><h:commandButton value="Logout" action="#{AdminBean.logout}" styleClass="btn btn-success" /></span>
-                        
-                        
-
 <h:dataTable value="#{AdminBean.getUserList()}" var="u" border="1">
 
 
@@ -52,6 +47,41 @@ Flag Value
     </h:commandButton>
 </h:column>
 </h:dataTable>
+
+
+<m:message xmlns="http://www.w3.org/1999/xhtml"
+
+    xmlns:m="http://jboss.com/products/seam/mail"
+
+    xmlns:h="http://java.sun.com/jsf/html">
+
+  
+
+    <m:from name="Peter" address="viral@gmail.com" />
+
+    <m:to name="Viral" address>viralsv2010@gmail.com</m:to>
+
+    <m:subject>Try out Seam!</m:subject>
+
+    
+
+    <m:body>
+
+        <p><h:outputText value="Dear Hello" />,</p>
+
+        <p>You can try out Seam by visiting 
+
+        <a href="http://labs.jboss.com/jbossseam">http://labs.jboss.com/jbossseam</a>.</p>
+
+        <p>Regards,</p>
+
+        <p>Pete</p>
+
+    </m:body>
+
+    
+
+</m:message>
 </h:form>
 </body>
 

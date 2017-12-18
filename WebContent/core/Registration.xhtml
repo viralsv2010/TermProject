@@ -10,6 +10,24 @@
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/css/bootstrap.min.css" integrity="sha384-/Y6pD6FV/Vv2HJnA6t+vslU6fwYXjCFtcEpHbNJ0lyAFsXTsjBbfaDjzALeQsN6M" crossorigin="anonymous"></link>
 	<link rel="stylesheet" href="../css/custom.css"></link>
   	<title><ui:insert name="title">Registration Page</ui:insert></title>
+		<script
+			  src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+<script>
+function showUserSelection(idFrom) {  
+  if (document.getElementById){  
+  var valueFrom = idFrom.value;  
+    if (valueFrom == 'Manager'){  
+      document.getElementById('registrationform:fee').className="visible";
+      document.getElementById('registrationform:fees').className="visible";
+    }  
+    else{  
+
+      document.getElementById('registrationform:fee').className="invisible";
+      document.getElementById('registrationform:fees').className="invisible";
+    }  
+  }  
+} 
+</script>
 </head>
 
 <body onload="registrationform.reset()">
@@ -72,11 +90,17 @@
 			      
 			      <tr>
 			        <th><label for="selection">Register as ::</label></th>
-			        <td>   		<h:selectOneRadio id="selection" value="#{LoginBean.role}">
-   									<f:selectItem itemValue="Customer" itemLabel="Customer" />
-   									<f:selectItem itemValue="Manager" itemLabel="Manager" />
+			        <td>   		<h:selectOneRadio id="selection" value="#{LoginBean.role}" label="Action" required="true" onclick="javascript:showUserSelection(this)">
+   									<f:selectItem itemValue="Customer" name="radio" itemLabel="Customer" />
+   									<f:selectItem itemValue="Manager" name="radio" itemLabel="Manager" />
+   									<p:ajax process="console" update="@form" />
    								</h:selectOneRadio>
    					</td>
+			      </tr>
+			  
+			      <tr>
+			        <th><h:outputLabel value="Enter your Fee ::" id="fee"></h:outputLabel></th>
+			        <td><h:inputText id="fees" value="#{LoginBean.fee}" required="true" requiredMessage="Fee is required." class="form-control"  a:placeholder="200.00" ></h:inputText></td>
 			      </tr>
 			      
 			      <tr>

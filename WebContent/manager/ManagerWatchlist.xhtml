@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+    <h:head>
+        <title>TODO supply a title</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+
+        <!-- Bootstrap core CSS -->
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/css/bootstrap.min.css"></link>
+
+        <!-- Custom styles for this template -->
+        <link rel="stylesheet" href="../css/style.css" ></link>
+
+    </h:head>
+    <h:body>
+        <div class="container">
+            <h:form name="dashboard">
+                <div class="row">
+                    <div class="col-md-12 col-sm-12 col-lg-12" style="width:100%;text-align:right">
+                        <span style="float:left;">
+                            <h:panelGroup>
+                                <span>Welcome <h:outputText value="#{sessionScope.user}" /></span>
+                            </h:panelGroup>
+                            <!--  <h2>
+    							<h:outputText value="#{LoginBean.username}" escape="false" />
+							</h2> -->
+                        </span>
+                        <span><h:commandButton value="Logout" action="#{ManagerBean.logout}" styleClass="btn btn-success" /></span>
+                        <span><h:commandButton value="Dashboard" action="#{ManagerBean.dashboardRedirect}" styleClass="btn btn-success" /></span>
+                        <span><h:commandButton value="Profile" action="#{ManagerBean.profileRedirect}" styleClass="btn btn-success" /></span>
+                        <span> <h:commandButton type="submit" value="Sell Stocks" action="#{ManagerBean.sellStocksRedirect}" styleClass="btn btn-success" /></span>
+                        <span><h:commandButton value="View Balance and History" action="#{ManagerBean.redirectBalanceandHistory}" styleClass="btn btn-success" /></span>
+                        <span><h:commandButton value="Watch List" action="#{ManagerBean.redirectToWatchList}" styleClass="btn btn-success" /></span>
+
+                    </div>
+                </div>
+            </h:form>
+            
+<h:form>
+
+<h:dataTable value="#{ManagerBean.getWatchList()}" var="u" border="1">
+
+<h:messages style="color: red;"/>
+		<h:column>
+    			
+    				<f:facet name="header">Id</f:facet>
+    				
+    				
+    				<h:outputText value="#{u.id}"  />
+					
+    	</h:column>
+		<h:column>
+    			
+    				<f:facet name="header">Stock Name</f:facet>
+    				
+    				
+    				<h:outputText value="#{u.symbol}"  />
+					
+    	</h:column>
+    	
+    			<h:column>
+    			
+    				<f:facet name="header">Current Price</f:facet>
+    				
+    				
+    				<h:outputText value="#{CustomerBean.getCurrentPriceofStock(u.symbol)}"  />
+					
+    	</h:column>   
+			<h:column>
+			    <h:commandButton value="Remove From Watchlist" action="#{ManagerBean.removeFromWatchlist(u.stockidforwatchlist)}">
+			        
+			    </h:commandButton>
+			</h:column>
+			
+		 
+
+</h:dataTable>
+</h:form>
+        </div>
+    </h:body>
+</html>

@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+    <h:head>
+        <title>TODO supply a title</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+
+        <!-- Bootstrap core CSS -->
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/css/bootstrap.min.css"></link>
+
+        <!-- Custom styles for this template -->
+        <link rel="stylesheet" href="customer.css" ></link>
+
+    </h:head>
+<h:body>
+<hr class="">
+<h:form>
+<div class="container target">
+    <div class="row">
+        <div class="col-sm-10">
+             <h1 class=""><span> Welcome <h:outputText value="#{sessionScope.user}" /></span></h1>
+         
+         <span><h:commandButton type="submit" value="Logout" action="#{CustomerBean.logout}" styleClass="btn btn-success" /></span>
+         <span> <h:commandButton type="submit" value="Dashboard" action="#{CustomerBean.dashboardRedirect}" styleClass="btn btn-success" /></span>
+<br></br>
+        </div>
+      <div class="col-sm-2"><a href="/users" class="pull-right"><img title="profile image" class="img-circle img-responsive" src="http://www.rlsandbox.com/img/profile.jpg"></img></a>
+
+        </div>
+    </div>
+  <br>
+
+    </br>
+          
+
+<h:form>
+<h:dataTable value="#{CustomerBean.selectManager()}" var="u" border="1">
+
+
+<h:column>
+<f:facet name="header">
+First Name
+</f:facet>
+#{u.firstname}
+</h:column>
+
+<h:column>
+<f:facet name="header">
+Last Name
+</f:facet>
+#{u.lastname}
+</h:column>
+
+<h:column>
+<f:facet name="header">
+Email
+</f:facet>
+#{u.email}
+</h:column>
+
+<h:column>
+<f:facet name="header">
+Phone Number
+</f:facet>
+#{u.phonenumber}
+</h:column>
+
+<h:column>
+<f:facet name="header">
+Role
+</f:facet>
+#{u.role}
+</h:column>
+
+<h:column>
+<f:facet name="header">
+Fees
+</f:facet>
+#{u.fee}
+</h:column>
+
+
+<h:column>
+<f:facet name="header">
+Address
+</f:facet>
+#{u.address}
+</h:column>
+<!--  
+<h:column>
+    <h:commandButton value="Approve" action="#{CustomerBean.changeApprove(u.userID)}">
+        <f:setPropertyActionListener target="#{CustomerBean.flagVal}" value="#{u.flagVal}"/>
+    </h:commandButton>
+</h:column>
+<h:column>
+    <h:commandButton value="Decline" action="#{CustomerBean.changeApprove(u.userID)}">
+        <f:setPropertyActionListener target="#{AdminBean.flagVal}" value="#{u.flagVal}"/>
+    </h:commandButton>
+</h:column>
+-->
+</h:dataTable>
+
+
+
+
+firstname : <h:outputLabel value="#{CustomerBean.firstname}"></h:outputLabel>
+lastname : <h:outputLabel value="#{CustomerBean.lastname}"></h:outputLabel>
+Username :<h:outputLabel value="#{CustomerBean.username}"></h:outputLabel>
+Email	 : <h:outputLabel value="#{CustomerBean.email}"></h:outputLabel>
+PhoneNumber : <h:outputLabel value="#{CustomerBean.phonenumber}"></h:outputLabel>
+Role 	: <h:outputLabel value="#{CustomerBean.role}"></h:outputLabel>
+</h:form>
+</div>
+</h:form>
+</hr>
+    </h:body>
+</html>

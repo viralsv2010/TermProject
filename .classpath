@@ -23,5 +23,6 @@
 		</attributes>
 	</classpathentry>
 	<classpathentry kind="lib" path="F:/Albany/Subjects/2nd Sem/Software Engineering/Downloads/mysql-connector-java-5.1.44/mysql-connector-java-5.1.44/mysql-connector-java-5.1.44-bin.jar"/>
+	<classpathentry kind="lib" path="F:/Albany/Subjects/2nd Sem/Software Engineering/Downloads/jboss-seam-mail.jar/jboss-seam-mail.jar"/>
 	<classpathentry kind="output" path="target/classes"/>
 </classpath>

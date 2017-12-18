@@ -21,13 +21,136 @@
                     <div class="col-md-12 col-sm-12 col-lg-12" style="width:100%;text-align:right">
                         <span style="float:left;">
                             <h:panelGroup rendered="#{not empty userBean.username}">
-                                <p>Welcome #{LoginBean.username}</p>
+                                <p>Welcome <h:outputText value="#{sessionScope.user}" /></p>
                             </h:panelGroup>
                         </span>
-                        <span><h:commandButton value="Logout" action="#{CustomerBean.logout}" styleClass="btn btn-success" /></span>
+                        <span><h:commandButton value="Logout" action="#{ManagerBean.logout}" styleClass="btn btn-success" /></span>
+                        <span><h:commandButton value="Profile" action="#{ManagerBean.profileRedirect}" styleClass="btn btn-success" /></span>
+                        <span> <h:commandButton type="submit" value="Sell Stocks" action="#{ManagerBean.sellStocksRedirect}" styleClass="btn btn-success" /></span>
+                        <span><h:commandButton value="View Balance and History" action="#{ManagerBean.redirectBalanceandHistory}" styleClass="btn btn-success" /></span>
+                        <span><h:commandButton value="Watch List" action="#{ManagerBean.redirectToWatchList}" styleClass="btn btn-success" /></span>
                     </div>
                 </div>
             </h:form>
+
+<h:form>
+<h:dataTable value="#{ManagerBean.getStocks()}" var="u" border="1">
+<h:messages style="color: red;"/>
+
+		<h:column>
+    			
+    				<f:facet name="header">Stock Name</f:facet>
+    				
+    				
+    				<h:outputText value="#{u.symbol}"  />
+					
+    	</h:column>  
+			<h:column>
+			    <h:commandButton value="Add to Watchlist" action="#{ManagerBean.addToWatchlist(u.symbol)}">
+			        
+			    </h:commandButton>
+			</h:column>
+
+</h:dataTable>
+<h:outputLabel> Requests From Customers for Buy</h:outputLabel>
+<h:dataTable value="#{ManagerBean.getBuyRequests()}" var="u" border="1">
+
+
+		<h:column>
+    			
+    				<f:facet name="header">Id</f:facet>
+    				
+    				
+    				<h:outputText value="#{u.id}"  />
+					
+    	</h:column>
+		<h:column>
+    			
+    				<f:facet name="header">Customer Name</f:facet>
+    				
+    				
+    				<h:outputText value="#{u.customername}"  />
+					
+    	</h:column>
+    	
+    	<h:column>
+    			
+    				<f:facet name="header">Requested Amount</f:facet>
+    				
+    				
+    				<h:outputText value="#{u.amt}"  />
+					
+    	</h:column>   
+    	
+    	    	<h:column>
+    			
+    				<f:facet name="header">Remaining Amount</f:facet>
+    				
+    				
+    				<h:outputText value="#{u.remainingAmt}"  />
+					
+    	</h:column>
+    	<!--
+			<h:column>
+			    <h:commandButton value="Remove From Watchlist" action="#{CustomerBean.removeFromWatchlist(u.stockidforwatchlist)}">
+			        
+			    </h:commandButton>
+			</h:column>
+			-->
+		 
+
+</h:dataTable>
+
+
+
+<h:outputLabel> Requests From Customers for Sell</h:outputLabel>
+<h:dataTable value="#{ManagerBean.getSellRequests()}" var="u" border="1">
+
+
+		<h:column>
+    			
+    				<f:facet name="header">Id</f:facet>
+    				
+    				
+    				<h:outputText value="#{u.id}"  />
+					
+    	</h:column>
+		<h:column>
+    			
+    				<f:facet name="header">Customer Name</f:facet>
+    				
+    				
+    				<h:outputText value="#{u.customername}"  />
+					
+    	</h:column>
+    	
+    	<h:column>
+    			
+    				<f:facet name="header">Requested Amount</f:facet>
+    				
+    				
+    				<h:outputText value="#{u.amt}"  />
+					
+    	</h:column>   
+    	
+    	    	<h:column>
+    			
+    				<f:facet name="header">Remaining Amount</f:facet>
+    				
+    				
+    				<h:outputText value="#{u.remainingAmt}"  />
+					
+    	</h:column>
+    	<!--
+			<h:column>
+			    <h:commandButton value="Remove From Watchlist" action="#{CustomerBean.removeFromWatchlist(u.stockidforwatchlist)}">
+			        
+			    </h:commandButton>
+			</h:column>
+			-->
+		 
+
+</h:dataTable>
 
             <div class="well">
                 <legend>Search Data</legend>
@@ -36,27 +159,29 @@
 
                     <h:form>
                         <label for="sel1">Stock: </label>
-                        <h:selectOneMenu id="symbol" value="#{CustomerBean.selectedSymbol}">
-                            <f:selectItems value="#{CustomerBean.availableSymbols}" />
+                        <h:selectOneMenu id="symbol" value="#{ManagerBean.selectedSymbol}">
+                            <f:selectItems value="#{ManagerBean.availableSymbols}" />
                         </h:selectOneMenu>
 
                         <label for="sel1">Interval: </label>
-                        <h:selectOneMenu id="interval" value="#{CustomerBean.selectedInterval}">
-                            <f:selectItems value="#{CustomerBean.availableIntervals}" />
+                        <h:selectOneMenu id="interval" value="#{ManagerBean.selectedInterval}">
+                            <f:selectItems value="#{ManagerBean.availableIntervals}" />
                         </h:selectOneMenu>
                         <br />
-                        <h:commandButton value="Get Data" action="#{CustomerBean.timeseries}" styleClass="btn btn-success" />
+                        <h:commandButton value="Get Data" action="#{ManagerBean.timeseries}" styleClass="btn btn-success" />
                     </h:form>
                 </div>
 
-                <h:panelGroup rendered="#{not empty CustomerBean.table1Markup}">
-                    <h:outputText value="#{CustomerBean.table1Markup}" escape="false" styleClass="preformatted" />
+                <h:panelGroup rendered="#{not empty ManagerBean.table1Markup}">
+                    <h:outputText value="#{ManagerBean.table1Markup}" escape="false" styleClass="preformatted" />
                 </h:panelGroup>
 
-                <h:panelGroup rendered="#{not empty CustomerBean.table2Markup}">
-                    <h:outputText value="#{CustomerBean.table2Markup}" escape="false" styleClass="preformatted" />
+                <h:panelGroup rendered="#{not empty ManagerBean.table2Markup}">
+                    <h:outputText value="#{ManagerBean.table2Markup}" escape="false" styleClass="preformatted" />
                 </h:panelGroup>
             </div>
+            
+        </h:form>
         </div>
     </h:body>
 </html>

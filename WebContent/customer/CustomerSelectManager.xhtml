@@ -1,0 +1,203 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+    <h:head>
+        <title>TODO supply a title</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+
+        <!-- Bootstrap core CSS -->
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/css/bootstrap.min.css"></link>
+
+        <!-- Custom styles for this template -->
+        <link rel="stylesheet" href="customer.css" ></link>
+
+    </h:head>
+<h:body>
+<hr class="">
+<h:form>
+<div class="wrapper">
+<div class="container target">
+    <div class="row">
+        <div class="col-sm-10">
+             <h1 class=""><span> Welcome <h:outputText value="#{sessionScope.user}" /></span></h1>
+                           <span><h:commandButton value="Logout" action="#{CustomerBean.logout}" styleClass="btn btn-success" /></span>
+                           <span><h:commandButton value="Dashboard" action="#{CustomerBean.dashboardRedirect}" styleClass="btn btn-success" /></span>
+                        <span><h:commandButton value="Profile" action="#{CustomerBean.profileRedirect}" styleClass="btn btn-success" /></span>
+                        <span><h:commandButton value="Select Manager" action="#{CustomerBean.redirectManagerSelection}" styleClass="btn btn-success" /></span>
+                        <span><h:commandButton value="View Balance and History" action="#{CustomerBean.redirectBalanceandHistory}" styleClass="btn btn-success" /></span>
+                        <span> <h:commandButton value="Sell Stocks" action="#{CustomerBean.sellStocksRedirect}" styleClass="btn btn-success" /></span>
+                        <span> <h:commandButton value="Request Manager Buy" action="#{CustomerBean.requestManagerforstockpurchasebuy}" styleClass="btn btn-success" /></span>
+                        <span> <h:commandButton value="Request Manager Sell" action="#{CustomerBean.requestManagerforstockpurchasesell}" styleClass="btn btn-success" /></span>
+                        <span><h:commandButton value="Watch List" action="#{CustomerBean.redirectToWatchList}" styleClass="btn btn-success" /></span>
+<br></br>
+        </div>
+      <div class="col-sm-2"><a href="/users" class="pull-right"><img title="profile image" class="img-circle img-responsive" src="http://www.rlsandbox.com/img/profile.jpg"></img></a>
+
+        </div>
+    </div>
+
+
+<h:form>
+<h:messages id="temp" style = "color:red;margin:8px;" />
+<h:dataTable value="#{CustomerBean.getManagerList()}" var="u" border="1">
+<h:messages style="color: red;"/>
+
+		<h:column>
+    			
+    				<f:facet name="header">First Name</f:facet>
+    				
+    				
+    				<h:outputText value="#{u.firstname}"  />
+					
+    	</h:column>
+
+		<h:column>
+    			
+    				<f:facet name="header">Last Name</f:facet>
+    				
+    				<h:outputText value="#{u.lastname}"  />
+					
+    	</h:column>
+
+		<h:column>
+    			
+    				<f:facet name="header">Username</f:facet>
+    				
+    				<h:outputText value="#{u.username}"  />
+					
+    	</h:column>
+    	
+    	
+		<h:column>
+		    <h:commandButton value="View Profile" action="#{CustomerBean.getManagerProfileData(u.username)}">
+		        <f:setPropertyActionListener target="#{CustomerBean.username}" value="#{u.username}"/>
+		    </h:commandButton>
+		</h:column>
+
+<!--  
+<h:column>
+    <h:commandButton value="Approve" action="#{CustomerBean.changeApprove(u.userID)}">
+        <f:setPropertyActionListener target="#{CustomerBean.flagVal}" value="#{u.flagVal}"/>
+    </h:commandButton>
+</h:column>
+<h:column>
+    <h:commandButton value="Decline" action="#{CustomerBean.changeApprove(u.userID)}">
+        <f:setPropertyActionListener target="#{AdminBean.flagVal}" value="#{u.flagVal}"/>
+    </h:commandButton>
+</h:column>
+-->
+</h:dataTable>
+
+
+
+
+
+<!-- 
+                <h:panelGroup rendered="#{not empty CustomerBean.table1Markup}">
+                    <h:outputText value="#{CustomerBean.table1Markup}" escape="false" styleClass="preformatted" />
+                </h:panelGroup>
+
+                <h:panelGroup rendered="#{not empty CustomerBean.table2Markup}">
+                    <h:outputText value="#{CustomerBean.table2Markup}" escape="false" styleClass="preformatted" />
+                </h:panelGroup>
+      -->           
+                
+			
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<br/>
+<br/><br/><br/><br/>
+
+<h:dataTable value="#{CustomerBean.getManagerDatalist}" var="u" border="1">
+
+
+		<h:column>
+    			
+    				<f:facet name="header">First Name</f:facet>
+    				
+    				
+    				<h:outputText value="#{u.firstname}"  />
+					
+    	</h:column>
+
+		<h:column>
+    			
+    				<f:facet name="header">Last Name</f:facet>
+    				
+    				<h:outputText value="#{u.lastname}"  />
+					
+    	</h:column>
+
+		<h:column>
+    			
+    				<f:facet name="header">Username</f:facet>
+    				
+    				<h:outputText value="#{u.username}"  />
+					
+    	</h:column>
+    	
+    			<h:column>
+    			
+    				<f:facet name="header">Email</f:facet>
+    				
+    				<h:outputText value="#{u.email}"  />
+					
+    	</h:column>
+    	
+    			<h:column>
+    			
+    				<f:facet name="header">Phone Number</f:facet>
+    				
+    				<h:outputText value="#{u.phonenumber}"  />
+					
+    	</h:column>
+    	
+    			<h:column>
+    			
+    				<f:facet name="header">Role</f:facet>
+    				
+    				<h:outputText value="#{u.role}"  />
+					
+    	</h:column>
+
+    			<h:column>
+    			
+    				<f:facet name="header">Fee</f:facet>
+    				
+    				<h:outputText value="#{u.fee}"  />
+					
+    	</h:column>
+    	
+		<h:column>
+		    <h:commandButton value="Select Manager" action="#{CustomerBean.insertSelectedManager(u.username)}">
+		    </h:commandButton>
+		</h:column>
+		
+</h:dataTable>
+	
+</h:form>
+</div>
+</div>
+</h:form>
+</hr>
+    </h:body>
+</html>

@@ -12,25 +12,42 @@
 
         <!-- Custom styles for this template -->
         <link rel="stylesheet" href="css/style.css" ></link>
-
+		<script
+			  src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
         <script type="text/javascript" src="scripts/jquery-3.2.1.min.js"></script>
         <script type="text/javascript">
             function calculateAmount() {
-                $("#purchase .amt").val(($("#purchase .purchasePrice").val() * $("#purchase .qty").val()).toFixed(2));
+              //  alert($("#purchase .amt").val(($("#purchase .purchasePrice").val() * $("#purchase .qty").val()).toFixed(2)));
+                $(document).ready(
+                	    function calculateAmount() {
+                	    	$("#purchase .amt").val(($("#purchase .purchasePrice").val() * $("#purchase .qty").val()).toFixed(2))
+                	    })
             }
         </script>
     </h:head>
     <body>
+    
         <!-- Add your site or application content here -->
         <div class="wrapper">
-
+	<h:messages style="color: red;"/>
             <div class="container bootstrap snippet">
                 <div class="row">
                     <div class="col-sm-10">
+                    <h:form>
                         <h1>
-                            Welcome <h:outputText value="#{sessionScope.username}" />
+                            Welcome <h:outputText value="#{sessionScope.user}" />
                         </h1>
-                        <span style="float:right;"><h:link value="Logout" outcome="index" style="text-align: right;"/></span>
+                        
+                        <span><h:commandButton value="Logout" action="#{CustomerBean.logout}" styleClass="btn btn-success" /></span>
+                        <span><h:commandButton value="Dashboard" action="#{CustomerBean.dashboardRedirect}" styleClass="btn btn-success" /></span>
+                        <span><h:commandButton value="Profile" action="#{CustomerBean.profileRedirect}" styleClass="btn btn-success" /></span>
+                        <span><h:commandButton value="Select Manager" action="#{CustomerBean.redirectManagerSelection}" styleClass="btn btn-success" /></span>
+                        <span><h:commandButton value="View Balance and History" action="#{CustomerBean.redirectBalanceandHistory}" styleClass="btn btn-success" /></span>
+                        <span> <h:commandButton value="Sell Stocks" action="#{CustomerBean.sellStocksRedirect}" styleClass="btn btn-success" /></span>
+                        <span> <h:commandButton value="Request Manager Buy" action="#{CustomerBean.requestManagerforstockpurchasebuy}" styleClass="btn btn-success" /></span>
+                        <span> <h:commandButton value="Request Manager Sell" action="#{CustomerBean.requestManagerforstockpurchasesell}" styleClass="btn btn-success" /></span>
+                        <span><h:commandButton value="Watch List" action="#{CustomerBean.redirectToWatchList}" styleClass="btn btn-success" /></span>
+                        </h:form>
                     </div>
                     <div class="col-sm-2">
                         <a href="#" class="pull-right">
@@ -38,21 +55,10 @@
                         </a>
                     </div>
                 </div>
+               
                 <div class="row">
                     <!--left col-->
-                    <div class="col-sm-3">
-                        <ul class="list-group">
-                            <li class="list-group-item text-muted">User Tasks</li>
-                            <li class="list-group-item text-right"><span class="pull-left"><strong>Joined</strong></span> 2.13.2014</li>
-                            <li class="list-group-item text-right"><span class="pull-left"><strong>Last seen</strong></span> Yesterday</li>
-                            <li class="list-group-item text-right"><span class="pull-left"><strong>Real name</strong></span> Joseph Doe</li>
-                        </ul>
 
-                        <div class="panel panel-default">
-                            <div class="panel-heading">Manager Tasks <i class="fa fa-link fa-1x"></i></div>
-                            <div class="panel-body"><a href="https://bootsnipp.com/snippets/kv2aW" target="_blank">bootsnipp.com</a></div>
-                        </div>
-                    </div>
 
                     <!-- main column -->
                     <div class="col-sm-6">
@@ -63,10 +69,12 @@
                             Quantity: <h:inputText binding="#{qty}" id="qty" styleClass="form-control qty" value="#{stockApiBean.qty}" required="true" onkeyup="calculateAmount()"/><br />
                             Amount: <h:inputText binding="#{amt}" id="amt" styleClass="form-control amt" value="#{stockApiBean.amt}" required="true"/><br />
                             <h:commandButton styleClass="btn btn-success btn-login-submit" value="Purchase" action="#{stockApiBean.createDbRecord(purchaseSymbol.value, purchasePrice.value, qty.value, amt.value)}"/>
+                         <!--    <h:commandButton styleClass="btn btn-success btn-login-submit" value="commonTable" action="#{stockApiBean.commonTable(purchaseSymbol.value, qty.value)}"/> -->
                         </h:form>
                     </div>
                 </div>
             </div>
         </div>
+        
     </body>
 </html>

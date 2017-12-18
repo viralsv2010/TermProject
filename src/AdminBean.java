@@ -41,6 +41,8 @@ import javax.ws.rs.core.MediaType;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
+import Dao.AdminDao;
+
 @ManagedBean(name = "AdminBean")
 @SessionScoped
 public class AdminBean {
@@ -71,56 +73,7 @@ public class AdminBean {
 	{
 		System.out.println("Username :: " + uname);
 		System.out.println("Flagvalu :: " + flagVal);
-		PreparedStatement ps = null;
-		Connection con = null;
-		ResultSet rs = null;
-		String sql;
-		try
-		{
-			com.mysql.jdbc.jdbc2.optional.MysqlDataSource ds = new com.mysql.jdbc.jdbc2.optional.MysqlDataSource();
-//			System.out.println("Datasource successful.");
-			ds.setServerName(System.getenv("ICSI518_SERVER"));
-//			System.out.println("Datasource successful. A" + System.getenv("ICSI518_SERVER"));
-			ds.setPortNumber(Integer.valueOf(System.getenv("ICSI518_PORT")));
-	//		System.out.println("Datasource successful. B" + Integer.valueOf(System.getenv("ICSI518_PORT")));
-			ds.setDatabaseName(System.getenv("ICSI518_DB"));
-//			System.out.println("Datasource successful. C" + System.getenv("ICSI518_DB"));
-			ds.setUser(System.getenv("ICSI518_USER"));
-	//		System.out.println("Datasource successful. D" + System.getenv("ICSI518_USER"));
-			ds.setPassword(System.getenv("ICSI518_PASSWORD"));
-//			System.out.println("Datasource successful. E" + System.getenv("ICSI518_PASSWORD"));
-		
-			// Get a connection object
-			con = ds.getConnection();
-			if(flagVal == false)
-			{
-				sql = "update manager set flagbyadmin=" + 1 + " where user_id= '" + uname +"'";
-			}
-			else
-			{
-				sql = "update manager set flagbyadmin=" + 0 + " where user_id= '" + uname +"'";
-			}
-			System.out.println("Sql formed :: " + sql);
-			ps= con.prepareStatement(sql); 
-			ps.executeUpdate();
-
-		}
-		catch(Exception e)
-		{
-		e.printStackTrace();
-		}
-		finally
-		{
-		try
-		{
-		con.close();
-		ps.close();
-		}
-		catch(Exception e)
-		{
-		e.printStackTrace();
-		}
-		}
+		AdminDao.statusChange(uname,flagVal);
 		
 	}
 public List<AdminBean> getUserList()
@@ -178,4 +131,23 @@ public List<AdminBean> getUserList()
 		}
 		return list;
 	}
+
+
+public void logout()
+{
+	String page2 = "core/Login.xhtml";
+	//System.out.println("Inside Logout.");
+	ExternalContext ec = FacesContext.getCurrentInstance().getExternalContext();
+	try {
+		FacesContext.getCurrentInstance().getExternalContext().invalidateSession();
+		ec.redirect(ec.getRequestContextPath() + "/" + page2);
+		
+	} catch (IOException e) {
+		// TODO Auto-generated catch block
+		e.printStackTrace();
+	}
+}
+
+
+
 }

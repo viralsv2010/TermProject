@@ -13,6 +13,7 @@ import javax.faces.bean.SessionScoped;
 import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
 import javax.faces.context.Flash;
+import javax.servlet.http.HttpSession;
 
 
 
@@ -28,11 +29,31 @@ public class LoginBean {
 	private String password;
 	private String firstname;
 	private String lastname,address,email,phonenumber,role;
+	private double fee;
+	private boolean isManager;
+	public boolean isManager() {
+		return isManager;
+	}
+
+	public void setManager(boolean isManager) {
+		this.isManager = isManager;
+	}
+
+	public double getFee() {
+		return fee;
+	}
+
+	public void setFee(double fee) {
+		this.fee = fee;
+	}
+
 	public String getRole() {
+		System.out.println("inside getrole with value :" + role);
 		return role;
 	}
 
 	public void setRole(String role) {
+		System.out.println("inside getrole with value :" + role);
 		this.role = role;
 	}
 
@@ -101,7 +122,7 @@ public class LoginBean {
 		try{
 			// Setup the DataSource object
 			
-			boolean valid =LoginDao.insert(firstname,lastname,address,email,phonenumber,username,password,role);
+			boolean valid =LoginDao.insert(firstname,lastname,address,email,phonenumber,username,password,role,fee);
 			boolean validUser = LoginDao.inserIntoUser(username,password,role);
 			if(valid)
 			{
@@ -154,7 +175,7 @@ public class LoginBean {
 	}
 
 
-	public String checkUsernameandPassword(String u_name,String pass_word)
+	public String checkUsernameandPassword(String u_name,String pass_word) throws SQLException
 	{
 		System.out.println("Inside checkUsernameandPassword");
 		
@@ -166,7 +187,7 @@ public class LoginBean {
 
 	
 
-	public String checkLogin()
+	public String checkLogin() throws SQLException
 	{
 		System.out.println("Inside CheckLogin. Username is ::" + username + "Password is ::" + password); 
 		String pass = checkUsernameandPassword(username,password);
@@ -177,6 +198,14 @@ public class LoginBean {
 		String page3 = "admin/AdminDashboard.xhtml";
 		if(username.equals(username) && password.equals(pass))
 		{
+//			FacesContext context1 = FacesContext.getCurrentInstance();
+//			context1.getExternalContext().getSessionMap().put("user", username);
+//			   HttpSession session = (HttpSession)FacesContext.getCurrentInstance().getExternalContext().getSession(true);
+//			   session.setAttribute("user", username);
+			FacesContext facesContext = FacesContext.getCurrentInstance();
+			HttpSession session = (HttpSession) facesContext.getExternalContext().getSession(true);
+			session.setAttribute("user", username);
+			
 			String roleVal = LoginDao.getRoleValue(username);
 			System.out.println("Role Value in Controller :: " + roleVal);
 			if(roleVal.equals("Customer"))

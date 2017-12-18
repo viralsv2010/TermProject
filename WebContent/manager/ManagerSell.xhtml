@@ -1,0 +1,129 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://xmlns.jcp.org/jsf/passthrough"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+    <h:head>
+        <title>Sell Stock</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+
+        <!-- Bootstrap core CSS -->
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/css/bootstrap.min.css"></link>
+
+        <!-- Custom styles for this template -->
+        <link rel="stylesheet" href="css/style.css" ></link>
+		<script
+			  src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+        <script type="text/javascript" src="scripts/jquery-3.2.1.min.js"></script>
+        <script type="text/javascript">
+            function calculateAmount() {
+              //  alert($("#purchase .amt").val(($("#purchase .purchasePrice").val() * $("#purchase .qty").val()).toFixed(2)));
+                $(document).ready(
+                	    function calculateAmount() {
+                	    	$("#sell .amt").val(($("#sell .purchasePrice").val() * $("#sell .qty").val()).toFixed(2))
+                	    })
+            }
+        </script>
+    </h:head>
+    <body>
+    
+        <!-- Add your site or application content here -->
+        <div class="wrapper">
+
+            <div class="container bootstrap snippet">
+                <div class="row">
+                    <div class="col-sm-10">
+                    <h:form>
+                        <h1>
+                            Welcome <h:outputText value="#{sessionScope.user}" />
+                        </h1>
+                        <span><h:commandButton value="Logout" action="#{ManagerBean.logout}" styleClass="btn btn-success" /></span>
+                        <span><h:commandButton value="Dashboard" action="#{ManagerBean.dashboardRedirect}" styleClass="btn btn-success" /></span>
+                        <span><h:commandButton value="Profile" action="#{ManagerBean.profileRedirect}" styleClass="btn btn-success" /></span>
+                        <span> <h:commandButton type="submit" value="Sell Stocks" action="#{ManagerBean.sellStocksRedirect}" styleClass="btn btn-success" /></span>
+                        <span><h:commandButton value="View Balance and History" action="#{ManagerBean.redirectBalanceandHistory}" styleClass="btn btn-success" /></span>
+                        <span><h:commandButton value="Watch List" action="#{ManagerBean.redirectToWatchList}" styleClass="btn btn-success" /></span>
+                        
+                        </h:form>
+                    </div>
+                    <div class="col-sm-2">
+                        <a href="#" class="pull-right">
+                            <img title="profile image" class="img-circle img-responsive" src="http://www.gravatar.com/avatar/28fd20ccec6865e2d5f0e1f4446eb7bf?s=100"></img>
+                        </a>
+                    </div>
+                </div>
+<h:form>
+<h:dataTable value="#{ManagerBean.getSellRequests()}" var="u" border="1">
+<h:messages style="color: red;"/>
+
+		<h:column>
+    			
+    				<f:facet name="header">Id</f:facet>
+    				
+    				
+    				<h:outputText value="#{u.id}"  />
+					
+    	</h:column>
+		<h:column>
+    			
+    				<f:facet name="header">Customer Name</f:facet>
+    				
+    				
+    				<h:outputText value="#{u.customername}"  />
+					
+    	</h:column>
+    	
+    	<h:column>
+    			
+    				<f:facet name="header">Request sell Amount</f:facet>
+    				
+    				
+    				<h:outputText value="#{u.amt}"  />
+					
+    	</h:column>   
+    	
+    	<h:column>
+    			
+    				<f:facet name="header">Remaining Amount</f:facet>
+    				
+    				
+    				<h:outputText value="#{u.remainingAmt}"  />
+					
+    	</h:column>   
+    	<!--
+			<h:column>
+			    <h:commandButton value="Remove From Watchlist" action="#{CustomerBean.removeFromWatchlist(u.stockidforwatchlist)}">
+			        
+			    </h:commandButton>
+			</h:column>
+			-->
+		 
+
+</h:dataTable>
+</h:form>
+
+
+
+
+					<div class="col-sm-6">
+                        <h:form id="sell">
+                            <h:messages style="color: red;"/>
+                            Stock Name: <h:inputText binding="#{purchaseSymbol}" id="symbol" styleClass="form-control purchaseSymbol" value="#{stockApiBean.purchaseSymbol}" required="true"/><br />
+                            Price: <h:inputText binding="#{purchasePrice}" id="price" styleClass="form-control purchasePrice" value="#{stockApiBean.purchasePrice}" required="true"/><br />
+                            Quantity: <h:inputText binding="#{qty}" id="qty" styleClass="form-control qty" value="#{stockApiBean.qty}" required="true" onkeyup="calculateAmount()"/><br />
+                            Amount: <h:inputText binding="#{amt}" id="amt" styleClass="form-control amt" value="#{stockApiBean.amt}" required="true"/><br />
+                            Customer Name: <h:inputText binding="#{customerName}" id="customername" styleClass="form-control customername" value="#{ManagerBean.customername}" required="true"/><br />
+                            
+                            <h:commandButton styleClass="btn btn-success btn-login-submit" value="Sell" action="#{ManagerBean.updateDbRecord(purchaseSymbol.value, purchasePrice.value, qty.value, amt.value, customerName.value)}"/>
+                        </h:form>
+                    </div>
+                    
+                    
+                    
+            </div>
+        </div>
+        
+    </body>
+</html>
