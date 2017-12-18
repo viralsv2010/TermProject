@@ -21,14 +21,12 @@
     <div class="row">
         <div class="col-sm-10">
              <h1 class=""><span> Welcome <h:outputText value="#{sessionScope.user}" /></span></h1>
-                        <span><h:commandButton value="Logout" action="#{CustomerBean.logout}" styleClass="btn btn-success" /></span>
-                        <span><h:commandButton value="Logout" action="#{CustomerBean.dashboardRedirect}" styleClass="btn btn-success" /></span>
-                        <span><h:commandButton value="Profile" action="#{CustomerBean.profileRedirect}" styleClass="btn btn-success" /></span>
-                        <span><h:commandButton value="Select Manager" action="#{CustomerBean.redirectManagerSelection}" styleClass="btn btn-success" /></span>
+                        <span><h:commandButton value="Logout" action="#{ManagerBean.logout}" styleClass="btn btn-success" /></span>
+                        <span><h:commandButton value="Dashboard" action="#{ManagerBean.dashboardRedirect}" styleClass="btn btn-success" /></span>
+                        <span><h:commandButton value="Profile" action="#{ManagerBean.profileRedirect}" styleClass="btn btn-success" /></span>
+                        <span> <h:commandButton type="submit" value="Sell Stocks" action="#{ManagerBean.sellStocksRedirect}" styleClass="btn btn-success" /></span>
                         <span><h:commandButton value="View Balance and History" action="#{ManagerBean.redirectBalanceandHistory}" styleClass="btn btn-success" /></span>
-                        <span> <h:commandButton value="Sell Stocks" action="#{CustomerBean.sellStocksRedirect}" styleClass="btn btn-success" /></span>
-                        <span> <h:commandButton value="Request Manager Buy" action="#{CustomerBean.requestManagerforstockpurchase}" styleClass="btn btn-success" /></span>
-                        <span><h:commandButton value="Watch List" action="#{CustomerBean.redirectToWatchList}" styleClass="btn btn-success" /></span>
+                        <span><h:commandButton value="Watch List" action="#{ManagerBean.redirectToWatchList}" styleClass="btn btn-success" /></span>
 <br></br>
         </div>
       <div class="col-sm-2"><a href="/users" class="pull-right"><img title="profile image" class="img-circle img-responsive" src="http://www.rlsandbox.com/img/profile.jpg"></img></a>

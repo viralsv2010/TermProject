@@ -601,6 +601,7 @@ public class ManagerDao {
 		
 		return balance;
 	}
+	
 
 	public static void updateRemainingBalanceBuy(double remainingBalance, String customer, String manager) {
 		// TODO Auto-generated method stub
@@ -659,6 +660,67 @@ public class ManagerDao {
 		}
 	}
 
+	
+	
+	public static void updateRemainingBalanceSell(double remainingBalance, String customer, String manager) {
+		// TODO Auto-generated method stub
+		PreparedStatement st = null;
+		Connection conr = null;
+		boolean rsr;
+		String sqlr;
+		double balance=0.0;
+		try
+		{
+			com.mysql.jdbc.jdbc2.optional.MysqlDataSource ds = new com.mysql.jdbc.jdbc2.optional.MysqlDataSource();
+////			System.out.println("Datasource successful.");
+//			ds.setServerName(System.getenv("ICSI518_SERVER"));
+////			System.out.println("Datasource successful. A" + System.getenv("ICSI518_SERVER"));
+//			ds.setPortNumber(Integer.valueOf(System.getenv("ICSI518_PORT")));
+//	//		System.out.println("Datasource successful. B" + Integer.valueOf(System.getenv("ICSI518_PORT")));
+//			ds.setDatabaseName(System.getenv("ICSI518_DB"));
+////			System.out.println("Datasource successful. C" + System.getenv("ICSI518_DB"));
+//			ds.setUser(System.getenv("ICSI518_USER"));
+//	//		System.out.println("Datasource successful. D" + System.getenv("ICSI518_USER"));
+//			ds.setPassword(System.getenv("ICSI518_PASSWORD"));
+////			System.out.println("Datasource successful. E" + System.getenv("ICSI518_PASSWORD"));
+//		
+//			// Get a connection object
+//			conr = ds.getConnection();
+			
+			conr = DatabaseConnection.getConnection();
+			
+			sqlr = "update customermanagersellrequest set remainingAmount =" + remainingBalance +" where customername='"+ customer +"' && managername='"+manager+"'";
+					//+ " uid=" + stockid +"";
+			
+			System.out.println("Sql formed for getting Balance:: " + sqlr);
+			st = conr.prepareStatement(sqlr);
+			System.out.println("PreparedStatement Successful" + st);
+			
+			rsr = st.execute();
+			st.close();
+			
+		}
+		catch(Exception e)
+		{
+		e.printStackTrace();
+		}
+		finally
+		{
+		try
+		{
+		DatabaseConnection.close(conr);
+		st.close();
+		
+		}
+		catch(Exception e)
+		{
+		e.printStackTrace();
+		}
+		}
+	}
+
+	
+	
 	public static double getRequestBalanceSell(String custName, String managerName) {
 		// TODO Auto-generated method stub
 		System.out.println("Manager Getting Requested Balance of User :: " + custName);

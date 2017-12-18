@@ -844,7 +844,7 @@ public class ManagerBean {
             		remainingBalance = remainingBalance - amountwithManagerFee;
 		            boolean rs ;
 		            System.out.println("Remaining Balance after deducting managerfee : " + remainingBalance);
-	            	ManagerDao.updateRemainingBalanceBuy(remainingBalance,custName,managerName);
+	            	
 		        	long time = System.currentTimeMillis();
 		        	System.out.println("Current Time :: " + time);
 		        	date = new Date(time);
@@ -852,7 +852,7 @@ public class ManagerBean {
 		        	
 		            double managerTotalBalance =  ManagerDao.getTotalBalance(managerName);
 		            double managerbal = managerfee + managerTotalBalance;
-	            	ManagerDao.updateBalance(managerbal, managerName);
+	            	
 	            	
 		        	 Timestamp timestamp = new Timestamp(System.currentTimeMillis());
 		             System.out.println(timestamp);
@@ -862,7 +862,8 @@ public class ManagerBean {
 		            if(flag==true)
 		            {
 			            boolean valid = daob.insertIntoManagerSell(custName, sym, qty, currentPriceNow, amountAfterManagerfee, date, currentTime, managerName);
-			            
+			            ManagerDao.updateBalance(managerbal, managerName);
+			            ManagerDao.updateRemainingBalanceSell(remainingBalance,custName,managerName);
 			            if(valid)
 			            {
 			            	StockAPIDao.updateBalance(updatedBalanceCustomer, custName);
